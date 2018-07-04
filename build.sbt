@@ -9,11 +9,15 @@ lazy val googleApiClientVersion = "1.23.0"
 lazy val scalaTestVersion = "3.0.5"
 
 lazy val root = (project in file("."))
+  .enablePlugins(JavaAppPackaging)
   .settings(
     name := "weatherstation",
 
     scalaVersion := "2.12.6",
     organization := "io.tafli",
+
+    mainClass in(Compile, run) := Some("tafli.WeatherStation"),
+    mainClass in(Compile, packageBin) := Some("tafli.WeatherStation"),
 
     libraryDependencies ++= Seq(
       "com.typesafe.akka" %% "akka-actor" % akkaVersion,

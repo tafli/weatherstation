@@ -25,11 +25,14 @@ object StackActor {
 }
 
 class StackActor extends Actor with ActorLogging {
-  override def preStart(): Unit = log.info("StackActor started")
+  var brickletMap: Map[String, (Bricklet, IPConnection)] = Map()
+
+  override def preStart(): Unit = {
+    log.info("StackActor started")
+    self ! Tick
+  }
 
   override def postStop(): Unit = log.info("StackActor stopped")
-
-  var brickletMap: Map[String, (Bricklet, IPConnection)] = Map()
 
   def receive: Receive = {
     case Tick => {

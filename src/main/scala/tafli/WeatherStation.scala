@@ -10,7 +10,6 @@ import tafli.actors.{DbActor, OutdoorWeatherActor, RootActor, StackActor}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import scala.io.StdIn
 import scala.util.{Failure, Success}
 
 
@@ -20,8 +19,6 @@ object WeatherStation extends App with StrictLogging {
 
   logger.info("Initialize Tinkerforge stack")
   val stack = StackActor.actor
-
-  stack ! StackActor.Tick
 
   logger.info("Starting Weather Station...")
 
@@ -38,9 +35,4 @@ object WeatherStation extends App with StrictLogging {
       RootActor.system.actorOf(OutdoorWeatherActor.props(ow, DbActor.actor))
     case Failure(ex) => ex.printStackTrace()
   }
-
-  logger.info("Press ENTER to shutdown...")
-  StdIn.readLine()
-
-  RootActor.system.terminate()
 }
