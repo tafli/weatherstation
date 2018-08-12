@@ -24,7 +24,7 @@ object WeatherData extends SQLSyntaxSupport[WeatherData] {
 
   val d = WeatherData.syntax("d")
 
-  override val tableName = "data"
+  override val tableName = "weather"
 
   def apply(d: SyntaxProvider[WeatherData])(rs: WrappedResultSet): WeatherData = apply(d.resultName)(rs)
 
